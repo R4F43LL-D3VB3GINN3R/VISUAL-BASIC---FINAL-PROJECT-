@@ -1,0 +1,422 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 19-Set-2023 às 03:00
+-- Versão do servidor: 10.4.28-MariaDB
+-- versão do PHP: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `pokemon_game`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `moves`
+--
+
+CREATE TABLE `moves` (
+  `ID` int(11) NOT NULL,
+  `Pokemon_ID` int(11) NOT NULL,
+  `NOME` varchar(255) NOT NULL,
+  `TIPO` varchar(255) NOT NULL,
+  `DAMAGE` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `moves`
+--
+
+INSERT INTO `moves` (`ID`, `Pokemon_ID`, `NOME`, `TIPO`, `DAMAGE`) VALUES
+(1, 1, 'Tackle', 'Normal', 40),
+(2, 1, 'Growl', 'Normal', 0),
+(3, 1, 'Leech Seed', 'Grama', 0),
+(4, 1, 'Vine Whip', 'Grama', 45),
+(5, 2, 'Scratch', 'Normal', 40),
+(6, 2, 'Growl', 'Normal', 0),
+(7, 2, 'Ember', 'Fogo', 40),
+(8, 2, 'Leer', 'Normal', 0),
+(9, 3, 'Tackle', 'Normal', 40),
+(10, 3, 'Tail Whip', 'Normal', 0),
+(11, 3, 'Bubble', 'Água', 40),
+(12, 3, 'Withdraw', 'Água', 0),
+(13, 4, 'Quick Attack', 'Elétrico', 40),
+(14, 4, 'Thunder Shock', 'Elétrico', 55),
+(15, 4, 'Double Team', 'Normal', 0),
+(16, 4, 'Thunder Wave', 'Elétrico', 0),
+(17, 5, 'Pound', 'Normal', 40),
+(18, 5, 'Sing', 'Normal', 0),
+(19, 5, 'Disable', 'Normal', 0),
+(20, 5, 'Defense Curl', 'Normal', 0),
+(21, 6, 'Leech Life', 'Inseto', 80),
+(22, 6, 'Supersonic', 'Normal', 0),
+(23, 6, 'Astonish', 'Fantasma', 30),
+(24, 6, 'Confuse Ray', 'Fantasma', 0),
+(25, 7, 'Tackle', 'Normal', 40),
+(26, 7, 'Defense Curl', 'Normal', 0),
+(27, 7, 'Mud-Slap', 'Terra', 20),
+(28, 7, 'Rock Throw', 'Pedra', 50),
+(29, 8, 'Low Kick', 'Lutador', 50),
+(30, 8, 'Karate Chop', 'Lutador', 50),
+(31, 8, 'Seismic Toss', 'Lutador', 70),
+(32, 8, 'Foresight', 'Normal', 0),
+(33, 9, 'Transform', 'Normal', 0),
+(34, 9, 'Struggle', 'Normal', 50),
+(35, 9, 'Transform', 'Normal', 0),
+(36, 9, 'Struggle', 'Normal', 50),
+(37, 10, 'Tackle', 'Normal', 40),
+(38, 10, 'Tail Whip', 'Normal', 0),
+(39, 10, 'Growl', 'Normal', 0),
+(40, 10, 'Quick Attack', 'Normal', 50),
+(41, 11, 'Tackle', 'Normal', 40),
+(42, 11, 'Conversion', 'Normal', 0),
+(43, 11, 'Sharpen', 'Normal', 0),
+(44, 11, 'Psybeam', 'Psíquico', 65),
+(45, 12, 'Pound', 'Normal', 40),
+(46, 12, 'Growl', 'Normal', 0),
+(47, 12, 'Encore', 'Normal', 0),
+(48, 12, 'Sing', 'Normal', 0),
+(49, 13, 'Ember', 'Fogo', 40),
+(50, 13, 'Tail Whip', 'Normal', 0),
+(51, 13, 'Roar', 'Normal', 0),
+(52, 13, 'Quick Attack', 'Normal', 40),
+(53, 14, 'Absorb', 'Grama', 20),
+(54, 14, 'Sweet Scent', 'Normal', 0),
+(55, 14, 'Poison Powder', 'Veneno', 0),
+(56, 14, 'Stun Spore', 'Grama', 0),
+(57, 15, 'Scratch', 'Normal', 40),
+(58, 15, 'Stun Spore', 'Grama', 0),
+(59, 15, 'Leech Life', 'Inseto', 20),
+(60, 15, 'Poison Powder', 'Veneno', 0),
+(61, 16, 'Tackle', 'Normal', 40),
+(62, 16, 'Disable', 'Normal', 0),
+(63, 16, 'Supersonic', 'Normal', 0),
+(64, 16, 'Confusion', 'Psíquico', 50),
+(65, 17, 'Scratch', 'Normal', 40),
+(66, 17, 'Growl', 'Normal', 0),
+(67, 17, 'Bite', 'Normal', 60),
+(68, 17, 'Pay Day', 'Normal', 40),
+(69, 18, 'Scratch', 'Normal', 40),
+(70, 18, 'Tail Whip', 'Normal', 0),
+(71, 18, 'Water Gun', 'Água', 40),
+(72, 18, 'Confusion', 'Psíquico', 50),
+(73, 19, 'Scratch', 'Normal', 40),
+(74, 19, 'Leer', 'Normal', 0),
+(75, 19, 'Low Kick', 'Lutador', 50),
+(76, 19, 'Karate Chop', 'Lutador', 50),
+(77, 20, 'Bite', 'Normal', 60),
+(78, 20, 'Roar', 'Normal', 0),
+(79, 20, 'Ember', 'Fogo', 40),
+(80, 20, 'Leer', 'Normal', 0),
+(81, 21, 'Bubble', 'Água', 40),
+(82, 21, 'Hypnosis', 'Psíquico', 0),
+(83, 21, 'Water Gun', 'Água', 40),
+(84, 21, 'Double Slap', 'Normal', 15),
+(85, 22, 'Teleport', 'Psíquico', 0),
+(86, 22, 'Kinesis', 'Psíquico', 0),
+(87, 22, 'Disable', 'Normal', 0),
+(88, 22, 'Confusion', 'Psíquico', 50),
+(89, 23, 'Splash', 'Normal', 0),
+(90, 23, 'Tackle', 'Normal', 40),
+(91, 23, 'Flail', 'Normal', 50),
+(92, 23, 'Bounce', 'Normal', 85),
+(93, 24, 'Vine Whip', 'Grama', 45),
+(94, 24, 'Growth', 'Normal', 0),
+(95, 24, 'Wrap', 'Normal', 15),
+(96, 24, 'Poison Powder', 'Veneno', 0),
+(97, 25, 'Poison Sting', 'Veneno', 15),
+(98, 25, 'Supersonic', 'Normal', 0),
+(99, 25, 'Wrap', 'Normal', 15),
+(100, 25, 'Water Gun', 'Água', 40),
+(101, 26, 'Tackle', 'Normal', 40),
+(102, 26, 'Gust', 'Voador', 40),
+(103, 26, 'Sand Attack', 'Normal', 0),
+(104, 26, 'Quick Attack', 'Normal', 40),
+(105, 27, 'Peck', 'Voador', 35),
+(106, 27, 'Growl', 'Normal', 0),
+(107, 27, 'Leer', 'Normal', 0),
+(108, 27, 'Fury Attack', 'Normal', 15),
+(109, 28, 'Peck', 'Voador', 35),
+(110, 28, 'Sand Attack', 'Normal', 0),
+(111, 28, 'Leer', 'Normal', 0),
+(112, 28, 'Fury Attack', 'Normal', 15),
+(113, 29, 'Peck', 'Voador', 35),
+(114, 29, 'Growl', 'Normal', 0),
+(115, 29, 'Quick Attack', 'Normal', 40),
+(116, 29, 'Rage', 'Normal', 20),
+(117, 30, 'Lick', 'Fantasma', 20),
+(118, 30, 'Hypnosis', 'Psíquico', 0),
+(119, 30, 'Dream Eater', 'Psíquico', 100),
+(120, 30, 'Night Shade', 'Fantasma', 30);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pokemon`
+--
+
+CREATE TABLE `pokemon` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(255) NOT NULL,
+  `TIPO` varchar(255) NOT NULL,
+  `HP` int(3) NOT NULL,
+  `MP` int(3) NOT NULL,
+  `VELOCIDADE` int(3) NOT NULL,
+  `PSTATUS` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `pokemon`
+--
+
+INSERT INTO `pokemon` (`ID`, `NOME`, `TIPO`, `HP`, `MP`, `VELOCIDADE`, `PSTATUS`) VALUES
+(1, 'Bulbasaur', 'Grama', 60, 130, 45, NULL),
+(2, 'Charmander', 'Fogo', 52, 104, 65, NULL),
+(3, 'Squirtle', 'Água', 59, 118, 43, NULL),
+(4, 'Pikachu', 'Elétrico', 47, 110, 90, NULL),
+(5, 'Jigglypuff', 'Normal', 153, 180, 20, NULL),
+(6, 'Zubat', 'Veneno', 53, 90, 55, NULL),
+(7, 'Geodude', 'Pedra', 53, 60, 20, NULL),
+(8, 'Machop', 'Lutador', 93, 100, 35, NULL),
+(9, 'Ditto', 'Normal', 64, 96, 48, NULL),
+(10, 'Eevee', 'Normal', 73, 90, 55, NULL),
+(11, 'Porygon', 'Normal', 87, 120, 40, NULL),
+(12, 'Clefairy', 'Normal', 93, 170, 35, NULL),
+(13, 'Vulpix', 'Fogo', 51, 130, 65, NULL),
+(14, 'Oddish', 'Grama', 60, 150, 30, NULL),
+(15, 'Paras', 'Inseto', 47, 140, 25, NULL),
+(16, 'Venonat', 'Inseto', 80, 110, 45, NULL),
+(17, 'Meowth', 'Normal', 53, 80, 90, NULL),
+(18, 'Psyduck', 'Água', 67, 100, 55, NULL),
+(19, 'Mankey', 'Lutador', 53, 70, 70, NULL),
+(20, 'Growlithe', 'Fogo', 73, 140, 60, NULL),
+(21, 'Poliwag', 'Água', 53, 80, 90, NULL),
+(22, 'Abra', 'Psíquico', 33, 200, 90, NULL),
+(23, 'Magikarp', 'Água', 27, 20, 80, NULL),
+(24, 'Bellsprout', 'Grama', 67, 130, 40, NULL),
+(25, 'Tentacool', 'Água', 53, 200, 70, NULL),
+(26, 'Pidgey', 'Voador', 53, 70, 56, NULL),
+(27, 'Spearow', 'Voador', 53, 62, 70, NULL),
+(28, 'Farfetch\'d', 'Normal', 69, 116, 60, NULL),
+(29, 'Doduo', 'Normal', 47, 70, 75, NULL),
+(30, 'Gastly', 'Fantasma', 40, 200, 80, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `time1`
+--
+
+CREATE TABLE `time1` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(255) NOT NULL,
+  `TIPO` varchar(255) NOT NULL,
+  `HP` int(3) NOT NULL,
+  `MP` int(3) NOT NULL,
+  `VELOCIDADE` int(3) NOT NULL,
+  `PSTATUS` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `time1`
+--
+
+INSERT INTO `time1` (`ID`, `NOME`, `TIPO`, `HP`, `MP`, `VELOCIDADE`, `PSTATUS`) VALUES
+(762, 'Bulbasaur', 'Grama', 60, 130, 45, NULL),
+(763, 'Charmander', 'Fogo', 52, 104, 65, NULL),
+(764, 'Squirtle', 'Água', 59, 118, 43, NULL),
+(765, 'Pikachu', 'Elétrico', 47, 110, 90, NULL),
+(766, 'Jigglypuff', 'Normal', 153, 180, 20, NULL),
+(767, 'Zubat', 'Veneno', 53, 90, 55, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `time2`
+--
+
+CREATE TABLE `time2` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(255) NOT NULL,
+  `TIPO` varchar(255) NOT NULL,
+  `HP` int(3) NOT NULL,
+  `MP` int(3) NOT NULL,
+  `VELOCIDADE` int(3) NOT NULL,
+  `PSTATUS` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `time2`
+--
+
+INSERT INTO `time2` (`ID`, `NOME`, `TIPO`, `HP`, `MP`, `VELOCIDADE`, `PSTATUS`) VALUES
+(408, 'Gastly', 'Fantasma', 40, 200, 80, NULL),
+(409, 'Doduo', 'Normal', 47, 70, 75, NULL),
+(410, 'Farfetch\'d', 'Normal', 69, 116, 60, NULL),
+(411, 'Spearow', 'Voador', 53, 62, 70, NULL),
+(412, 'Pidgey', 'Voador', 53, 70, 56, NULL),
+(413, 'Tentacool', 'Água', 53, 200, 70, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `time3`
+--
+
+CREATE TABLE `time3` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(255) DEFAULT NULL,
+  `TIPO` varchar(255) DEFAULT NULL,
+  `HP` int(11) DEFAULT NULL,
+  `MP` int(11) DEFAULT NULL,
+  `VELOCIDADE` int(11) DEFAULT NULL,
+  `PSTATUS` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `time3`
+--
+
+INSERT INTO `time3` (`ID`, `NOME`, `TIPO`, `HP`, `MP`, `VELOCIDADE`, `PSTATUS`) VALUES
+(212, 'Bulbasaur', 'Grama', 60, 130, 45, NULL),
+(213, 'Charmander', 'Fogo', 52, 104, 65, NULL),
+(214, 'Squirtle', 'Água', 59, 118, 43, NULL),
+(215, 'Pikachu', 'Elétrico', 47, 110, 90, NULL),
+(216, 'Jigglypuff', 'Normal', 153, 180, 20, NULL),
+(217, 'Zubat', 'Veneno', 53, 90, 55, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `time4`
+--
+
+CREATE TABLE `time4` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(255) DEFAULT NULL,
+  `TIPO` varchar(255) DEFAULT NULL,
+  `HP` int(11) DEFAULT NULL,
+  `MP` int(11) DEFAULT NULL,
+  `VELOCIDADE` int(11) DEFAULT NULL,
+  `PSTATUS` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `time4`
+--
+
+INSERT INTO `time4` (`ID`, `NOME`, `TIPO`, `HP`, `MP`, `VELOCIDADE`, `PSTATUS`) VALUES
+(154, 'Gastly', 'Fantasma', 40, 200, 80, NULL),
+(155, 'Doduo', 'Normal', 47, 70, 75, NULL),
+(156, 'Farfetch\'d', 'Normal', 69, 116, 60, NULL),
+(157, 'Spearow', 'Voador', 53, 62, 70, NULL),
+(158, 'Pidgey', 'Voador', 53, 70, 56, NULL),
+(159, 'Tentacool', 'Água', 53, 200, 70, NULL);
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `moves`
+--
+ALTER TABLE `moves`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `Pokemon_ID` (`Pokemon_ID`);
+
+--
+-- Índices para tabela `pokemon`
+--
+ALTER TABLE `pokemon`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Índices para tabela `time1`
+--
+ALTER TABLE `time1`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Índices para tabela `time2`
+--
+ALTER TABLE `time2`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Índices para tabela `time3`
+--
+ALTER TABLE `time3`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Índices para tabela `time4`
+--
+ALTER TABLE `time4`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `moves`
+--
+ALTER TABLE `moves`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+
+--
+-- AUTO_INCREMENT de tabela `pokemon`
+--
+ALTER TABLE `pokemon`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de tabela `time1`
+--
+ALTER TABLE `time1`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=768;
+
+--
+-- AUTO_INCREMENT de tabela `time2`
+--
+ALTER TABLE `time2`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=414;
+
+--
+-- AUTO_INCREMENT de tabela `time3`
+--
+ALTER TABLE `time3`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+
+--
+-- AUTO_INCREMENT de tabela `time4`
+--
+ALTER TABLE `time4`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `moves`
+--
+ALTER TABLE `moves`
+  ADD CONSTRAINT `moves_ibfk_1` FOREIGN KEY (`Pokemon_ID`) REFERENCES `pokemon` (`ID`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

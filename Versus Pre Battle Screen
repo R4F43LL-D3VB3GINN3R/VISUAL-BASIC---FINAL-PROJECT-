@@ -1,0 +1,488 @@
+Imports MySql.Data.MySqlClient
+Public Class PreBattle
+
+    Public connectionString As String = "server=127.0.0.1;userid=root;password='';database=Pokemon_Game" 'STRING PARA DEFINIR A MINHA CONEXÃO COM O MYSQL'.
+    Public conn As New MySqlConnection(connectionString)                                                 'UMA INSTÂNCIA DA CLASSE MYSQLCONNECTION QUE DEFINE A CONEXÃO COM O BANCO DE DADOS.
+    Public Pokepictures As New Dictionary(Of String, String) 'VARIÁVEL PARA GUARDAR UM DICIONÁRIO DE IMAGENS.'
+    Public Time1 As New DataTable() 'TABELA INTERNA PARA GUARDAR O TIME1.'
+    Public TIME1ESCOLHA As New MySqlDataAdapter("SELECT NOME FROM TIME1", conn) 'STRING DE CONEXÃO PARA O TIME1.'
+    Public Time2 As New DataTable() 'TABELA INTERNA PARA GUARDAR O TIME2.'
+    Public TIME2ESCOLHA As New MySqlDataAdapter("SELECT NOME FROM TIME2", conn) 'STRING DE CONEXÃO PARA O TIME2.'
+    Sub Pokeimagens() 'UMA SUB PARA GUARDAR OS ITENS ADICIONADOS NO DICIONÁRIOS DE IMAGENS.'
+
+        Pokepictures.Clear() 'O DICIONÁRIO SEMPRE DEVE SER LIMPO ANTES DE SER CHAMADO PARA EVITAR ERROS DE DUPLICAÇÃO DE CHAVES.'
+
+        'O DICIONÁRIO CONTÉM UMA STRING DE REFERÊNCIA E É SEGUIDO PELO DIRETÓRIO AO QUAL ESTÁ ALOCADO.'
+
+        Pokepictures.Add("Bulbasaur", "C:\proj\Pokemons_Imagens\1.png")
+        Pokepictures.Add("Charmander", "C:\proj\Pokemons_Imagens\2.png")
+        Pokepictures.Add("Squirtle", "C:\proj\Pokemons_Imagens\3.png")
+        Pokepictures.Add("Pikachu", "C:\proj\Pokemons_Imagens\4.png")
+        Pokepictures.Add("Jigglypuff", "C:\proj\Pokemons_Imagens\5.png")
+        Pokepictures.Add("Zubat", "C:\proj\Pokemons_Imagens\6.png")
+        Pokepictures.Add("Geodude", "C:\proj\Pokemons_Imagens\7.png")
+        Pokepictures.Add("Machop", "C:\proj\Pokemons_Imagens\8.png")
+        Pokepictures.Add("Ditto", "C:\proj\Pokemons_Imagens\9.png")
+        Pokepictures.Add("Eevee", "C:\proj\Pokemons_Imagens\10.png")
+        Pokepictures.Add("Porygon", "C:\proj\Pokemons_Imagens\11.png")
+        Pokepictures.Add("Clefairy", "C:\proj\Pokemons_Imagens\12.png")
+        Pokepictures.Add("Vulpix", "C:\proj\Pokemons_Imagens\13.png")
+        Pokepictures.Add("Oddish", "C:\proj\Pokemons_Imagens\14.png")
+        Pokepictures.Add("Paras", "C:\proj\Pokemons_Imagens\15.png")
+        Pokepictures.Add("Venonat", "C:\proj\Pokemons_Imagens\16.png")
+        Pokepictures.Add("Meowth", "C:\proj\Pokemons_Imagens\17.png")
+        Pokepictures.Add("Psyduck", "C:\proj\Pokemons_Imagens\18.png")
+        Pokepictures.Add("Mankey", "C:\proj\Pokemons_Imagens\19.png")
+        Pokepictures.Add("Growlithe", "C:\proj\Pokemons_Imagens\20.png")
+        Pokepictures.Add("Poliwag", "C:\proj\Pokemons_Imagens\21.png")
+        Pokepictures.Add("Abra", "C:\proj\Pokemons_Imagens\22.png")
+        Pokepictures.Add("Magikarp", "C:\proj\Pokemons_Imagens\23.png")
+        Pokepictures.Add("Bellsprout", "C:\proj\Pokemons_Imagens\24.png")
+        Pokepictures.Add("Tentacool", "C:\proj\Pokemons_Imagens\25.png")
+        Pokepictures.Add("Pidgey", "C:\proj\Pokemons_Imagens\26.png")
+        Pokepictures.Add("Spearow", "C:\proj\Pokemons_Imagens\27.png")
+        Pokepictures.Add("Farfetch'd", "C:\proj\Pokemons_Imagens\28.png")
+        Pokepictures.Add("Doduo", "C:\proj\Pokemons_Imagens\29.png")
+        Pokepictures.Add("Gastly", "C:\proj\Pokemons_Imagens\30.png")
+
+    End Sub
+    Private Sub AtualizarTela()
+
+        Time1.Clear() 'LIMPA A TABELA INTERNA.'
+        Time2.Clear() 'LIMPA A TABELA INTERNA.'
+
+        conn.Open() 'ABRE A CONEXÃO COM O BANCO DE DADOS.'
+
+        TIME1ESCOLHA.Fill(Time1) 'ENCHE A TABELA INTERNA.'
+        TIME2ESCOLHA.Fill(Time2) 'ENCHE A TABELA INTERNA.'
+
+        conn.Close() 'FECHA A CONEXÃO COM O BANCO DE DADOS.'
+
+        Dim Linha1 As DataRow = Time1.Rows(0) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha2 As DataRow = Time1.Rows(1) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha3 As DataRow = Time1.Rows(2) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha4 As DataRow = Time1.Rows(3) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha5 As DataRow = Time1.Rows(4) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha6 As DataRow = Time1.Rows(5) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+
+        Dim Coluna1 As Object = Linha1("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna2 As Object = Linha2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna3 As Object = Linha3("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna4 As Object = Linha4("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna5 As Object = Linha5("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna6 As Object = Linha6("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+
+        Label1.Text = Coluna1 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 0.'
+        Label2.Text = Coluna2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 1.'
+        Label3.Text = Coluna3 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 2.'
+        Label4.Text = Coluna4 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 3.'
+        Label5.Text = Coluna5 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 4.'
+        Label6.Text = Coluna6 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 5.'
+
+        Dim Linha1_2 As DataRow = Time2.Rows(0) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha2_2 As DataRow = Time2.Rows(1) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha3_2 As DataRow = Time2.Rows(2) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha4_2 As DataRow = Time2.Rows(3) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha5_2 As DataRow = Time2.Rows(4) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha6_2 As DataRow = Time2.Rows(5) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+
+        Dim Coluna1_2 As Object = Linha1_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna2_2 As Object = Linha2_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna3_2 As Object = Linha3_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna4_2 As Object = Linha4_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna5_2 As Object = Linha5_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna6_2 As Object = Linha6_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+
+        Label7.Text = Coluna1_2  'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 0.'
+        Label8.Text = Coluna2_2  'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 1.'
+        Label9.Text = Coluna3_2  'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 2.'
+        Label10.Text = Coluna4_2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 3.'
+        Label11.Text = Coluna5_2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 4.'
+        Label12.Text = Coluna6_2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 5.'
+
+
+        If Label1.Text = Coluna1 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome(Coluna1.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label2.Text = Coluna2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome2(Coluna2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label3.Text = Coluna3 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome3(Coluna3.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label4.Text = Coluna4 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome4(Coluna4.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label5.Text = Coluna5 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome5(Coluna5.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label6.Text = Coluna6 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome6(Coluna6.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label7.Text = Coluna1_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome7(Coluna1_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+
+        If Label8.Text = Coluna2_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome8(Coluna2_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label9.Text = Coluna3_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome9(Coluna3_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label10.Text = Coluna4_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome10(Coluna4_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label11.Text = Coluna5_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome11(Coluna5_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label12.Text = Coluna6_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome12(Coluna6_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+    End Sub
+    Private Sub AssociarImagemAoNome(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox1_P1.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox1_P1.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome2(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox2_P1.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox2_P1.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome3(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox3_P1.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox3_P1.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome4(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox4_P1.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox4_P1.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome5(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox5_P1.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox5_P1.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome6(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox6_P1.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox6_P1.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome7(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox7.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox7.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome8(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox8.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox8.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome9(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox9.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox9.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome10(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox10.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox10.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome11(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox11.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox11.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub AssociarImagemAoNome12(nomeControle As String) 'UMA FUNÇÃO CRIADA PARA CHAMAR O DICIONÁRIO'
+
+        'A FUNÇÃO USA A STRING DE REFERÊNCIA PARA PERCORRER O DIRETÓRIO EM BUSCA DA IMAGEM.0
+
+        Pokeimagens() 'CHAMADA DO DICIONÁRIO.'
+
+        If Pokepictures.ContainsKey(nomeControle) Then 'SE O DICIONÁRIO RECEBE A STRING DE REFERÊNCIA...
+            PictureBox12.Image = Image.FromFile(Pokepictures(nomeControle)) 'ELE RETORNA A IMAGEM REFERENTE A STRING.'
+        Else 'DO CONTRÁRIO...
+            PictureBox12.Image = Nothing 'NADA É RETORNADO.'
+        End If
+
+    End Sub
+
+    Private Sub PreBattle_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim Time1 As New DataTable() 'TABELA INTERNA PARA GUARDAR O TIME1.'
+        Dim TIME1ESCOLHA As New MySqlDataAdapter("SELECT NOME FROM TIME1", conn) 'STRING DE CONEXÃO PARA O TIME1.'
+        Dim Time2 As New DataTable() 'TABELA INTERNA PARA GUARDAR O TIME2.'
+        Dim TIME2ESCOLHA As New MySqlDataAdapter("SELECT NOME FROM TIME2", conn) 'STRING DE CONEXÃO PARA O TIME2.'
+
+        conn.Open() 'ABRE A CONEXÃO COM O BANCO DE DADOS.'
+
+        TIME1ESCOLHA.Fill(Time1) 'ENCHE A TABELA INTERNA.'
+        TIME2ESCOLHA.Fill(Time2) 'ENCHE A TABELA INTERNA.'
+
+        conn.Close() 'FECHA A CONEXÃO COM O BANCO DE DADOS.'
+
+        Dim Linha1 As DataRow = Time1.Rows(0) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha2 As DataRow = Time1.Rows(1) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha3 As DataRow = Time1.Rows(2) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha4 As DataRow = Time1.Rows(3) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha5 As DataRow = Time1.Rows(4) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha6 As DataRow = Time1.Rows(5) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+
+        Dim Coluna1 As Object = Linha1("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna2 As Object = Linha2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna3 As Object = Linha3("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna4 As Object = Linha4("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna5 As Object = Linha5("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna6 As Object = Linha6("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+
+        Label1.Text = Coluna1 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 0.'
+        Label2.Text = Coluna2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 1.'
+        Label3.Text = Coluna3 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 2.'
+        Label4.Text = Coluna4 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 3.'
+        Label5.Text = Coluna5 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 4.'
+        Label6.Text = Coluna6 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 5.'
+
+        Dim Linha1_2 As DataRow = Time2.Rows(0) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha2_2 As DataRow = Time2.Rows(1) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha3_2 As DataRow = Time2.Rows(2) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha4_2 As DataRow = Time2.Rows(3) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha5_2 As DataRow = Time2.Rows(4) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+        Dim Linha6_2 As DataRow = Time2.Rows(5) 'UMA VARIÁVEL DO TIPO LINHA RECEBE O ÍNDEX DA TABELA INTERNA.'
+
+        Dim Coluna1_2 As Object = Linha1_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna2_2 As Object = Linha2_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna3_2 As Object = Linha3_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna4_2 As Object = Linha4_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna5_2 As Object = Linha5_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+        Dim Coluna6_2 As Object = Linha6_2("Nome") 'O OBJETO COLUNA RECEBE O ÍNDEX DA LINHA COM COLUNA NOME.'
+
+        Label7.Text = Coluna1_2  'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 0.'
+        Label8.Text = Coluna2_2  'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 1.'
+        Label9.Text = Coluna3_2  'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 2.'
+        Label10.Text = Coluna4_2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 3.'
+        Label11.Text = Coluna5_2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 4.'
+        Label12.Text = Coluna6_2 'LABEL RECEBE O QUE ESTÁ ESCRITO NA COLUNA NOME DO ÍNDEX 5.'
+
+
+        If Label1.Text = Coluna1 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome(Coluna1.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label2.Text = Coluna2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome2(Coluna2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label3.Text = Coluna3 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome3(Coluna3.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label4.Text = Coluna4 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome4(Coluna4.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label5.Text = Coluna5 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome5(Coluna5.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label6.Text = Coluna6 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome6(Coluna6.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label7.Text = Coluna1_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome7(Coluna1_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+
+        If Label8.Text = Coluna2_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome8(Coluna2_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label9.Text = Coluna3_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome9(Coluna3_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label10.Text = Coluna4_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome10(Coluna4_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label11.Text = Coluna5_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome11(Coluna5_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+        If Label12.Text = Coluna6_2 Then 'SE O NOME DA LABEL FOR IGUAL AO NOME DA LINHA...
+
+            AssociarImagemAoNome12(Coluna6_2.ToString()) 'RECEBE A STRING E PROCURA A IMAGEM NO DIRETÓRIO.'
+
+        End If
+
+    End Sub
+
+    Private Sub PreBattle_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+
+        AtualizarTela() 'MANTÉM A TELA AJUSTADA CONFORME NAVEGO ENTRE OS FORMS.'
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Hide() 'ESCONDE O FORM.'
+        Battle.Show() 'VAI PARA A TELA DE BATALHA.'
+    End Sub
+End Class

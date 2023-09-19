@@ -1,0 +1,31 @@
+Imports System.Media
+Public Class SplashScreen
+
+    Dim player As New SoundPlayer()
+
+    Private Sub SplashScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Timer1.Enabled = True
+        Timer1.Start()
+
+        Try
+            player.SoundLocation = "C:\Users\eduar\Desktop\POKEMON_ATUAL\Pokemon Sounds\SplashScreen.wav"
+            player.Play()
+        Catch ex As Exception
+            MessageBox.Show("Erro ao reproduzir a música: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        ProgressBar1.Increment(1)
+        Label1.Text = ProgressBar1.Value & "%"
+
+        If (ProgressBar1.Value = 100) Then
+            Me.Hide()
+            Battle.Show()
+            Timer1.Enabled = True
+            Timer1.Stop()
+            player.Stop()
+
+        End If
+    End Sub
+End Class

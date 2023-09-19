@@ -1,0 +1,198 @@
+Imports System.Windows.Forms
+Imports System.Drawing
+Imports MySql.Data.MySqlClient
+Imports System.Globalization
+Imports System.Media
+Imports Org.BouncyCastle.Crypto.Engines
+
+Public Class Choice
+
+    Dim connectionString As String = "server=127.0.0.1;userid=root;password='';database=Pokemon_Game" 'STRING PARA DEFINIR A MINHA CONEXÃO COM O MYSQL'.
+    Dim conn As New MySqlConnection(connectionString)                                                 'UMA INSTÂNCIA DA CLASSE MYSQLCONNECTION QUE DEFINE A CONEXÃO COM O BANCO DE DADOS.
+    Dim TIME1 As New DataTable()                                                                      'UMA TABELA PARA GUARDAR TODOS OS DADOS DA TABELA TIME1.'
+    Dim POKEMONAMES As New DataTable()                                                                'UMA TABELA PARA GUARDAR TODOS OS NOMES DOS POKEMON.'
+    Dim TODOSPOKNAMES As New MySqlDataAdapter("SELECT NOME FROM POKEMON", conn)                       'OBJETO USADO PARA INSERIR TODOS OS NOMES NA TABELA INTERNA.'
+
+    'OBJETO DATATIME1 USADO PARA INSERIR POKEMON NO TIME1 FAZENDO OUTRA CONSULTA NA TABELA POKEMON ONDE NOME RECEBE OS NOMES DOS POKEMON.'
+    'ESTA CONSULTA FOI CONCATENADA PORQUE NÃO HAVIA CHAVES ESTRANGEIRAS ENTRE ESTAS DUAS TABELAS.'
+
+    Private TIME1_ESCOLHA As Integer = 0 'UM CONTADOR QUE CONTARÁ QUANTOS POKEMON EU ESCOLHO.'
+    Private TIME2_ESCOLHA As Integer = 0 'UM CONTADOR QUE CONTARÁ QUANTOS POKEMON EU ESCOLHO.'
+    Private TIME3_ESCOLHA As Integer = 0 'UM CONTADOR QUE CONTARÁ QUANTOS POKEMON EU ESCOLHO.'
+    Private TIME4_ESCOLHA As Integer = 0 'UM CONTADOR QUE CONTARÁ QUANTOS POKEMON EU ESCOLHO.'
+    Private PokemonEscolhidosTime1 As New List(Of String)()  'UMA LISTA CRIADA PARA RECEBER OS POKEMONS ESCOLHIDOS.'
+    Private PokemonEscolhidosTime3 As New List(Of String)() 'UMA LISTA CRIADA PARA RECEBER OS POKEMONS ESCOLHIDOS.'
+    Private PokemonEscolhidosTime2 As New List(Of String)()  'UMA LISTA CRIADA PARA RECEBER OS POKEMONS ESCOLHIDOS.'
+    Private PokemonEscolhidosTime4 As New List(Of String)() 'UMA LISTA CRIADA PARA RECEBER OS POKEMONS ESCOLHIDOS.'
+    Dim TIME3_POKE As String 'STRING PARA GUARDAR UMA STRING SELECIONADA NUMA COMBOBOX.'
+    Dim TIME1_POKE As String 'STRING PARA GUARDAR UMA STRING SELECIONADA NUMA COMBOBOX.'
+    Dim TIME2_POKE As String 'STRING PARA GUARDAR UMA STRING SELECIONADA NUMA COMBOBOX.'
+    Dim TIME4_POKE As String 'STRING PARA GUARDAR UMA STRING SELECIONADA NUMA COMBOBOX.'
+
+
+    Private Sub Choice_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        'SEMPRE QUE O FORM3 FOR CARREGADO A MINHA COMBOBOX TEM DE CONTER TODOS OS NOMES DOS POKEMON LÁ DENTRO.'
+
+        conn.Open() 'COMANDO PARA ABRIR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+
+        TODOSPOKNAMES.Fill(POKEMONAMES) 'OBJETO ENCHENDO A TABELA INTERNA POKEMONAMES.'
+
+        conn.Close() 'COMANDO PARA FECHAR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+
+        For Each row As DataRow In POKEMONAMES.Rows          'UM LOOP PARA PERCORRER CADA LINHA DA MINHA TABELA INTERNA.'
+            Dim POKENOME As String = row("NOME").ToString()  'UMA VARIÁVEL PARA COLETAR OS DADOS APENAS DA COLUNA NOME.'
+            FORM3_COMBOBOX_POKEMONS.Items.Add(POKENOME)      'CADA DADO COLETADO É INSERIDO À MINHA COMBOBOX.'
+        Next
+
+    End Sub
+    Private Sub INSERTPOKEMON_PLAYER1_Click(sender As Object, e As EventArgs) Handles INSERTPOKEMON_PLAYER1.Click
+
+        'ESTE BOTÃO INSERE POKEMONS NO BANCO DE DADOS ATRAVÉS DE CONSULTAS SQL.'
+        'SÃO IMPLICADAS AS CONDIÇÕES PARA QUE O CÓDIGO FUNCIONE DE ACORDO COM AS REGRAS DO JOGO.'
+
+        Dim PokemonSelecionado As String = FORM3_COMBOBOX_POKEMONS.SelectedItem.ToString()
+
+        'DUAS LISTAS DE STRING SEPARADAS PARA GUARDAR OS VALORES PARA CADA TABELA A FIM DE EVITAR ERROS POR REPETIÇÃO
+        'NAS CLÁUSULAS DAS CONDIÇÕES.'
+
+        If PokemonEscolhidosTime1.Count < 6 AndAlso Not PokemonEscolhidosTime1.Contains(PokemonSelecionado) Then 'SE A MINHA COMBOBOX NÃO ESTIVER VAZIA...
+            Dim cmd As New MySqlCommand("INSERT INTO TIME1 (NOME, TIPO, HP, MP, VELOCIDADE) " &
+                                         "SELECT NOME, TIPO, HP, MP, VELOCIDADE " &
+                                         "FROM POKEMON WHERE NOME = @NomePokemon", conn)
+
+            'OBJETO DATATIME1 USADO PARA INSERIR POKEMON NO TIME1 FAZENDO OUTRA CONSULTA NA TABELA POKEMON ONDE NOME RECEBE OS NOMES DOS POKEMON.'
+            'ESTA CONSULTA FOI CONCATENADA PORQUE NÃO HAVIA CHAVES ESTRANGEIRAS ENTRE ESTAS DUAS TABELAS.'
+
+            cmd.Parameters.AddWithValue("@NomePokemon", PokemonSelecionado)
+
+            'ESTE COMANDO EXECUTA UM PARÂMETRO @NomePokemon QUE É ADICIONADO AO ADAPTADOR DATATIME1...
+            'QUE REPRESENTA UMA INSTRUÇÃO SQL PARA INSERIR DADOS NA TABELA TIME1...
+            'O VALOR DO POKEMON SELECIONADO (TIME_POKE) SERÁ USADO COMO VALOR PARA ESSE PARÂMETRO NA CONSULTA SQL.'
+
+            conn.Open() 'COMANDO PARA ABRIR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+            cmd.ExecuteNonQuery() 'EXECUTA A CONSULTA SQL CMD.'
+            conn.Close() 'COMANDO PARA FECHAR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+
+            PokemonEscolhidosTime1.Add(PokemonSelecionado) 'ADICIONA O POKEMON À LISTA.'
+            TIME1_ESCOLHA += 1 'INCREMENTA O MEU CONTADOR.'
+
+        ElseIf PokemonEscolhidosTime1.Count >= 6 Then 'OU SE...
+            MessageBox.Show("Limite de 6 Pokémon escolhidos para o Team Blue atingido.") 'EXIBE A MENSAGEM.'
+        Else 'DO CONTRÁRIO.'
+            MessageBox.Show("Você já escolheu este Pokémon para TIME1.") 'EXIBE A MENSAGEM.'
+        End If
+
+        If PokemonEscolhidosTime3.Count < 6 AndAlso Not PokemonEscolhidosTime3.Contains(PokemonSelecionado) Then
+            Dim cmd As New MySqlCommand("INSERT INTO TIME3 (NOME, TIPO, HP, MP, VELOCIDADE) " &
+                                         "SELECT NOME, TIPO, HP, MP, VELOCIDADE " &
+                                         "FROM POKEMON WHERE NOME = @NomePokemon", conn)
+
+            'OBJETO DATATIME1 USADO PARA INSERIR POKEMON NO TIME1 FAZENDO OUTRA CONSULTA NA TABELA POKEMON ONDE NOME RECEBE OS NOMES DOS POKEMON.'
+            'ESTA CONSULTA FOI CONCATENADA PORQUE NÃO HAVIA CHAVES ESTRANGEIRAS ENTRE ESTAS DUAS TABELAS.'
+
+            cmd.Parameters.AddWithValue("@NomePokemon", PokemonSelecionado)
+
+            'ESTE COMANDO EXECUTA UM PARÂMETRO @NomePokemon QUE É ADICIONADO AO ADAPTADOR DATATIME1...
+            'QUE REPRESENTA UMA INSTRUÇÃO SQL PARA INSERIR DADOS NA TABELA TIME1...
+            'O VALOR DO POKEMON SELECIONADO (TIME_POKE) SERÁ USADO COMO VALOR PARA ESSE PARÂMETRO NA CONSULTA SQL.'
+
+            conn.Open() 'COMANDO PARA ABRIR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+            cmd.ExecuteNonQuery() 'EXECUTA A CONSULTA SQL CMD.'
+            conn.Close() 'COMANDO PARA FECHAR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+
+            PokemonEscolhidosTime3.Add(PokemonSelecionado) 'ADICIONA O POKEMON À LISTA.'
+            TIME3_ESCOLHA += 1 'INCREMENTA O MEU CONTADOR.'
+        ElseIf PokemonEscolhidosTime3.Count >= 6 Then 'OU SE...
+        Else 'DO CONTRÁRIO.'
+        End If
+
+    End Sub
+
+
+    Private Sub INSERTPOKEMON_PLAYER2_Click(sender As Object, e As EventArgs) Handles INSERTPOKEMON_PLAYER2.Click
+
+        'ESTE BOTÃO INSERE POKEMONS NO BANCO DE DADOS ATRAVÉS DE CONSULTAS SQL.'
+        'SÃO IMPLICADAS AS CONDIÇÕES PARA QUE O CÓDIGO FUNCIONE DE ACORDO COM AS REGRAS DO JOGO.'
+
+        If FORM3_COMBOBOX_POKEMONS.SelectedItem IsNot Nothing Then
+            Dim PokemonSelecionado As String = FORM3_COMBOBOX_POKEMONS.SelectedItem.ToString()
+
+            'DUAS LISTAS DE STRING SEPARADAS PARA GUARDAR OS VALORES PARA CADA TABELA A FIM DE EVITAR ERROS POR REPETIÇÃO
+            'NAS CLÁUSULAS DAS CONDIÇÕES.'
+
+            If PokemonEscolhidosTime2.Count < 6 AndAlso Not PokemonEscolhidosTime2.Contains(PokemonSelecionado) Then
+                Dim cmd As New MySqlCommand("INSERT INTO TIME2 (NOME, TIPO, HP, MP, VELOCIDADE) " &
+                                         "SELECT NOME, TIPO, HP, MP, VELOCIDADE " &
+                                         "FROM POKEMON WHERE NOME = @NomePokemon", conn)
+
+                'OBJETO DATATIME1 USADO PARA INSERIR POKEMON NO TIME1 FAZENDO OUTRA CONSULTA NA TABELA POKEMON ONDE NOME RECEBE OS NOMES DOS POKEMON.'
+                'ESTA CONSULTA FOI CONCATENADA PORQUE NÃO HAVIA CHAVES ESTRANGEIRAS ENTRE ESTAS DUAS TABELAS.'
+
+                cmd.Parameters.AddWithValue("@NomePokemon", PokemonSelecionado)
+
+                'ESTE COMANDO EXECUTA UM PARÂMETRO @NomePokemon QUE É ADICIONADO AO ADAPTADOR DATATIME1...
+                'QUE REPRESENTA UMA INSTRUÇÃO SQL PARA INSERIR DADOS NA TABELA TIME1...
+                'O VALOR DO POKEMON SELECIONADO (TIME_POKE) SERÁ USADO COMO VALOR PARA ESSE PARÂMETRO NA CONSULTA SQL.'
+
+                conn.Open() 'COMANDO PARA ABRIR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+                cmd.ExecuteNonQuery() 'EXECUTA A CONSULTA SQL CMD.'
+                conn.Close() 'COMANDO PARA FECHAR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+
+                PokemonEscolhidosTime2.Add(PokemonSelecionado) 'ADICIONA O POKEMON À LISTA.'
+                TIME2_ESCOLHA += 1  'INCREMENTA O MEU CONTADOR.'
+            ElseIf PokemonEscolhidosTime2.Count >= 6 Then 'OU SE...
+                MessageBox.Show("Limite de 6 Pokémon escolhidos para Team Red atingido.") 'EXIBE A MENSAGEM.'
+            Else 'DO CONTRÁRIO.'
+                MessageBox.Show("Você já escolheu este Pokémon para TIME2.") 'EXIBE A MENSAGEM.'
+            End If
+
+            If PokemonEscolhidosTime4.Count < 6 AndAlso Not PokemonEscolhidosTime4.Contains(PokemonSelecionado) Then
+
+                'OBJETO DATATIME1 USADO PARA INSERIR POKEMON NO TIME1 FAZENDO OUTRA CONSULTA NA TABELA POKEMON ONDE NOME RECEBE OS NOMES DOS POKEMON.'
+                'ESTA CONSULTA FOI CONCATENADA PORQUE NÃO HAVIA CHAVES ESTRANGEIRAS ENTRE ESTAS DUAS TABELAS.'
+
+                Dim cmd As New MySqlCommand("INSERT INTO TIME4 (NOME, TIPO, HP, MP, VELOCIDADE) " &
+                                         "SELECT NOME, TIPO, HP, MP, VELOCIDADE " &
+                                         "FROM POKEMON WHERE NOME = @NomePokemon", conn)
+
+                'OBJETO DATATIME1 USADO PARA INSERIR POKEMON NO TIME1 FAZENDO OUTRA CONSULTA NA TABELA POKEMON ONDE NOME RECEBE OS NOMES DOS POKEMON.'
+                'ESTA CONSULTA FOI CONCATENADA PORQUE NÃO HAVIA CHAVES ESTRANGEIRAS ENTRE ESTAS DUAS TABELAS.'
+
+                cmd.Parameters.AddWithValue("@NomePokemon", PokemonSelecionado)
+
+                'ESTE COMANDO EXECUTA UM PARÂMETRO @NomePokemon QUE É ADICIONADO AO ADAPTADOR DATATIME1...
+                'QUE REPRESENTA UMA INSTRUÇÃO SQL PARA INSERIR DADOS NA TABELA TIME1...
+                'O VALOR DO POKEMON SELECIONADO (TIME_POKE) SERÁ USADO COMO VALOR PARA ESSE PARÂMETRO NA CONSULTA SQL.'
+
+                conn.Open() 'COMANDO PARA ABRIR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+                cmd.ExecuteNonQuery() 'EXECUTA A CONSULTA SQL CMD.'
+                conn.Close() 'COMANDO PARA FECHAR UMA CONEXÃO COM O SERVIDOR MYSQL.'
+
+                PokemonEscolhidosTime4.Add(PokemonSelecionado) 'ADICIONA O POKEMON À LISTA.'
+                TIME4_ESCOLHA += 1  'INCREMENTA O MEU CONTADOR.'
+            ElseIf PokemonEscolhidosTime4.Count >= 6 Then 'OU SE...
+            Else
+            End If
+        Else
+        End If
+
+    End Sub
+
+    Private Sub CONCLUIR_Click(sender As Object, e As EventArgs) Handles CONCLUIR.Click
+
+        If TIME1_ESCOLHA = 6 AndAlso TIME2_ESCOLHA = 6 AndAlso TIME3_ESCOLHA = 6 AndAlso TIME4_ESCOLHA = 6 Then
+            Me.Hide()         'ESCONDE O FORM3.'
+            PreBattle.Show()  'MOSTRA NOVAMENTE O FORM1.'
+            TIME1_ESCOLHA = 0 'RESETA O CONTADOR.'
+            TIME2_ESCOLHA = 0 'RESETA O CONTADOR.'
+            TIME3_ESCOLHA = 0 'RESETA O CONTADOR.'
+            TIME4_ESCOLHA = 0 'RESETA O CONTADOR.'
+        Else
+            MessageBox.Show("Cada time deve conter exatamente 6 Pokémon.")
+        End If
+
+
+    End Sub
+
+End Class

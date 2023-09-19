@@ -5,7 +5,9 @@ Project Title: Development of a Pokémon Game with Database Integrated Battles
 Project Description:
 
 Objective:
-The aim of this project is to create an exciting Pokémon game with a focus on versus battles. Players will have the opportunity to form strategic teams with 30 unique Pokémon. The standout feature of this game will be the integration with a database, allowing players to store and manage their Pokémon, as well as participate in thrilling battles against other trainers. The game will emphasize battle strategy and player competition, making it an exhilarating and challenging experience in the Pokémon universe.
+The aim of this project is to create an exciting Pokémon game with a focus on versus battles. Players will have the opportunity to form strategic teams with 30 unique Pokémon. 
+The standout feature of this game will be the integration with a database, allowing players to store and manage their Pokémon, as well as participate in thrilling battles against other trainers. 
+The game will emphasize battle strategy and player competition, making it an exhilarating and challenging experience in the Pokémon universe.
 
 Database System:
 Integration with a database will enable players to link data stored in tables with Visual Basic, allowing for the insertion, removal, or modification of this data as needed.
@@ -14,13 +16,18 @@ Opening Form:
 Players will initiate the game with an exciting splash screen featuring a loading bar, while captivating opening music creates an exhilarating atmosphere.
 
 Pokémon Selection:
-Players will have the opportunity to assemble their battle teams by choosing 6 initial Pokémon from a predefined list. Each Pokémon will possess its own unique abilities and characteristics. This strategic selection of Pokémon will be crucial in determining the effectiveness of trainers' teams during versus battles, making each choice an important strategic decision that will directly affect the outcome of battles.
+Players will have the opportunity to assemble their battle teams by choosing 6 initial Pokémon from a predefined list. 
+Each Pokémon will possess its own unique abilities and characteristics. 
+This strategic selection of Pokémon will be crucial in determining the effectiveness of trainers' teams during versus battles, making each choice an important strategic decision that will directly affect the outcome of battles.
 
 Versus Form:
-Before challenging other trainers, players will be directed to the versus form, which will display the choices of both teams on an exciting vs. screen. Additionally, players will be able to view the opponent's Pokémon selection, allowing them to prepare strategically for the impending battle. This versus screen will serve as the starting point for Pokémon battles, where strategy and team selection will play a crucial role in the battle's outcome.
+Before challenging other trainers, players will be directed to the versus form, which will display the choices of both teams on an exciting vs. screen. 
+Additionally, players will be able to view the opponent's Pokémon selection, allowing them to prepare strategically for the impending battle. 
+This versus screen will serve as the starting point for Pokémon battles, where strategy and team selection will play a crucial role in the battle's outcome.
 
 Pokémon Battle:
-During battles, players will be taken to a battle form where they can make strategic decisions, such as wisely choosing attacks. Battles will be turn-based and will display Pokémon statistics in real-time.
+During battles, players will be taken to a battle form where they can make strategic decisions, such as wisely choosing attacks. 
+Battles will be turn-based and will display Pokémon statistics in real-time.
 
 Closing Form:
 After each versus battle, players will be directed to a closing form. This form will display a winner screen for the victorious team, highlighting the Pokémon used in battle by the winning trainer.
